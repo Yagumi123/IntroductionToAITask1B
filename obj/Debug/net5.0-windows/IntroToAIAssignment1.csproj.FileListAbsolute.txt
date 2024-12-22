@@ -1,0 +1,5 @@
+C:\Users\Thomas\Documents\IntroToAI\IntroToAIAssignment1\obj\Debug\net5.0-windows\IntroToAIAssignment1.csproj.AssemblyReference.cache
+C:\Users\Thomas\Documents\IntroToAI\IntroToAIAssignment1\obj\Debug\net5.0-windows\MainWindow.g.cs
+C:\Users\Thomas\Documents\IntroToAI\IntroToAIAssignment1\obj\Debug\net5.0-windows\App.g.cs
+C:\Users\Thomas\Documents\IntroToAI\IntroToAIAssignment1\obj\Debug\net5.0-windows\IntroToAIAssignment1_MarkupCompile.cache
+C:\Users\Thomas\Documents\IntroToAI\IntroToAIAssignment1\obj\Debug\net5.0-windows\IntroToAIAssignment1_MarkupCompile.lref
