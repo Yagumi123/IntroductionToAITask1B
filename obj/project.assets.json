@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Thomas\\Documents\\IntroToAI\\IntroToAIAssignment1\\IntroToAIAssignment1.csproj",
+      "projectUniqueName": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\IntroToAIAssignment1.csproj",
       "projectName": "IntroToAIAssignment1",
-      "projectPath": "C:\\Users\\Thomas\\Documents\\IntroToAI\\IntroToAIAssignment1\\IntroToAIAssignment1.csproj",
+      "projectPath": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\IntroToAIAssignment1.csproj",
       "packagesPath": "C:\\Users\\Thomas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Thomas\\Documents\\IntroToAI\\IntroToAIAssignment1\\obj\\",
+      "outputPath": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -46,6 +46,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -70,7 +75,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

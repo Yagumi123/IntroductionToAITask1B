@@ -21,9 +21,12 @@ namespace IntroToAIAssignment1
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    internal delegate void SearchVisualizeAction(int row, int col, string direction, int cost, bool isGoal, List<string> fullPath);
+
     /// 
     public partial class MainWindow : Window
     {
+        
 
         private Nodes[,] nodes; // To store the Nodes array
         private GridLayout gridLayout; // To store the grid layout
@@ -35,8 +38,9 @@ namespace IntroToAIAssignment1
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            string filename = "C:/Users/Thomas/Documents/IntroToAI/IntroToAIAssignment1/RobotNav_Test.txt";
-            string method = "dfs";
+            string filename = "C:/Users/Thomas/Documents/INTROTOAI/IntroductionToAITask1B/RobotNavTEST.txt";
+
+            string method = "DFS";
 
             GridLayout gridLayout = InterpretGrid(filename);
             DrawGrid(gridLayout, filename);
@@ -285,8 +289,79 @@ namespace IntroToAIAssignment1
             return InterpretedGrid;
         }
 
+        private void PathsFoundList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PathsFoundList.SelectedItem is ListBoxItem selectedListItem)
+            {
+                // Clear any previous arrows or markers from the grid
+                ClearGridVisuals();
+
+                // Retrieve the full path from the tag of the ListBoxItem
+                var fullPath = (List<string>)selectedListItem.Tag;
+                int currentRow = gridLayout.StartLocationXY[1];
+                int currentCol = gridLayout.StartLocationXY[0];
+
+                // Iterate over each step in the path
+                foreach (var step in fullPath)
+                {
+                    // Determine the new position based on the direction of the step
+                    switch (step)
+                    {
+                        case "Right":
+                            currentCol += 1;
+                            break;
+                        case "Left":
+                            currentCol -= 1;
+                            break;
+                        case "Up":
+                            currentRow -= 1;
+                            break;
+                        case "Down":
+                            currentRow += 1;
+                            break;
+                    }
+
+                    // Place an arrow on the grid at the new position
+                    AddArrowToGrid(currentRow, currentCol, step);
+                }
+            }
+        }
+
+
+
+        private void AddArrowToGrid(int row, int col, string direction)
+        {
+            string arrow = direction switch
+            {
+                "Right" => "→",
+                "Left" => "←",
+                "Up" => "↑",
+                "Down" => "↓",
+                _ => "" // Handles cases where direction might be unspecified or empty
+            };
+
+            // Only add an arrow if a direction is specified
+            if (!string.IsNullOrEmpty(arrow))
+            {
+                TextBlock arrowText = new TextBlock
+                {
+                    Text = arrow,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    FontSize = 24,
+                    FontWeight = FontWeights.Bold // Making the arrow more visible
+                };
+
+                Grid.SetRow(arrowText, row);
+                Grid.SetColumn(arrowText, col);
+                SearchAlgorithmGrid.Children.Add(arrowText);
+            }
+        }
+
+
         private void ClearGridVisuals()
         {
+            // Assuming you have a method like this to clear non-border elements from the grid
             var nonBorders = SearchAlgorithmGrid.Children.Cast<UIElement>()
                 .Where(element => !(element is Border))
                 .ToList();
@@ -296,6 +371,7 @@ namespace IntroToAIAssignment1
                 SearchAlgorithmGrid.Children.Remove(element);
             }
         }
+
 
         private async Task VisualizePath(Nodes[,] nodes, List<string> path, Nodes startNode, Nodes goalNode)
         {
@@ -322,7 +398,7 @@ namespace IntroToAIAssignment1
                     else
                     {
                         AddArrowToGrid(current.Location.Row, current.Location.Col, direction);
-                        await Task.Delay(500); // Optional delay for animation
+                        await Task.Delay(100); // Optional delay for animation
                     }
                     current = next;
                 }
@@ -350,151 +426,102 @@ namespace IntroToAIAssignment1
 
 
 
-        private void AddArrowToGrid(int row, int col, string direction)
-        {
-            string arrow = direction switch
-            {
-                "Right" => "→",
-                "Left" => "←",
-                "Up" => "↑",
-                "Down" => "↓",
-                _ => ""
-            };
-
-            TextBlock arrowText = new TextBlock
-            {
-                Text = arrow,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                FontSize = 24
-            };
-
-   
-
-            // Correct grid placement
-            Grid.SetRow(arrowText, row);
-            Grid.SetColumn(arrowText, col);
-
-            SearchAlgorithmGrid.Children.Add(arrowText);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         private async void PerformSearch(string method, GridLayout layout)
         {
-            gridLayout = layout; // Save gridLayout to the class field
-            nodes = CreateNodeTree(gridLayout); // Save Nodes to the class field
+            gridLayout = layout;
+            nodes = CreateNodeTree(gridLayout);
             Nodes startNode = nodes[gridLayout.StartLocationXY[1], gridLayout.StartLocationXY[0]];
-            string outputPath = "path.txt";
-
-            DFS dfs = new DFS();
-            BFS bfs = new BFS();
-
-            if (method.ToLower() == "dfs")
+            var outputPath = "PathsFOUND.txt";
+            var methods = method.ToLower().Split(',');
+            foreach (var goalLocation in gridLayout.GoalLocations)
             {
-                foreach (var goalLocation in gridLayout.GoalLocations)
-                {
-                    int goalRow = goalLocation[1];
-                    int goalCol = goalLocation[0];
-                    Nodes goalNode = nodes[goalRow, goalCol];
-                    await dfs.DepthFirstSearch(startNode, goalNode, outputPath, (row, col, direction) =>
-                    {
-                        Dispatcher.Invoke(() => AddArrowToGrid(row, col, direction));
-                    }, 500);
+                int goalRow = goalLocation[1];
+                int goalCol = goalLocation[0];
+                Nodes goalNode = nodes[goalRow, goalCol];
 
-                    break;
+                foreach (var meth in methods)
+                {
+                    switch (meth)
+                    {
+                        case "dfs":
+                            DFS dfs = new DFS();
+                            await dfs.DepthFirstSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                            {
+                                Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal, path));
+                            }, 100);
+                            break;
+                        case "bfs":
+                            BFS bfs = new BFS();
+                            await bfs.BreadthFirstSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                            {
+                                Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal, path));
+                            }, 100);
+                            break;
+                        case "astar":
+                            AStar astar = new AStar();
+                            await astar.AStarSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                            {
+                                Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal,path));
+                            }, 100);
+                            break;
+                        case "ucs":
+                            UCS ucs = new UCS();
+                            await ucs.UniformCostSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                            {
+                                Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal, path));
+                            }, 100);
+                            break;
+                        case "gbfs":
+                            GBFS gbfs = new GBFS();
+                            await gbfs.GreedyBestFirstSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                            {
+                                Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal, path));
+                            }, 100);
+                            break;
+                        case "hcs":
+                            HCS hcs = new HCS();
+                            await hcs.HillClimbingSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                            {
+                                Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal, path));
+                            }, 100);
+                            break;
+                        default:
+                            Debug.WriteLine($"Error: Unsupported method '{meth}'. Use 'dfs', 'bfs', 'astar', 'ucs', 'gbfs', or other supported methods.");
+                            break;
+                    }
                 }
             }
-            else if (method.ToLower() == "bfs")
-            {
-                foreach (var goalLocation in gridLayout.GoalLocations)
-                {
-                    int goalRow = goalLocation[1];
-                    int goalCol = goalLocation[0];
-                    Nodes goalNode = nodes[goalRow, goalCol];
-                    await bfs.BreadthFirstSearch(startNode, goalNode, outputPath, (row, col, direction) =>
-                    {
-                        Dispatcher.Invoke(() => AddArrowToGrid(row, col, direction));
-                    }, 500);
-
-                    break;
-                }
-            }
-           else if (method.ToLower() == "astar")
-            {
-                foreach (var goalLocation in gridLayout.GoalLocations)
-                {
-                    int goalRow = goalLocation[1];
-                    int goalCol = goalLocation[0];
-                    Nodes goalNode = nodes[goalRow, goalCol];
-                    AStar astar = new AStar();
-                    await astar.AStarSearch(startNode, goalNode, outputPath, (row, col, direction) =>
-                    {
-                        Dispatcher.Invoke(() => AddArrowToGrid(row, col, direction));
-                    }, 500);
-
-                  
-                }
-            
-            }
-            else
-            {
-                Debug.WriteLine($"Error: Unsupported method '{method}'. Use 'astar'.");
-            }
-
-            ParsePathsFromFile(outputPath);
         }
 
 
 
 
 
-        private void ParsePathsFromFile(string filePath)
+
+        private void UpdateUIWithSearchResults(int row, int col, string direction, int cost, bool goal, List<string> fullPath)
         {
-            if (!File.Exists(filePath))
+            Dispatcher.Invoke(() =>
             {
-                Debug.WriteLine($"Error: File '{filePath}' not found.");
-                return;
-            }
-
-            var lines = File.ReadAllLines(filePath);
-            foreach (var line in lines)
-            {
-                Dispatcher.Invoke(() =>
+                Debug.WriteLine("Updating UI with search results");
+                if (goal)
                 {
-                    PathsFoundList.Items.Add($"Path: {line}");
-                });
-            }
-        }
-
-
-        private void PathsFoundList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (PathsFoundList.SelectedItem is not string selectedPath) return;
-
-            var pathData = selectedPath.Split(':')[1].Trim();
-            var pathDirections = pathData.Split(" -> ");
-
-            var startNode = nodes[gridLayout.StartLocationXY[1], gridLayout.StartLocationXY[0]];
-            var goalNode = nodes[gridLayout.GoalLocations[0][1], gridLayout.GoalLocations[0][0]];
-
-            _ = VisualizePath(nodes, pathDirections.ToList(), startNode, goalNode);
+                    // Create a new ListBoxItem
+                    ListBoxItem newItem = new ListBoxItem();
+                    newItem.Content = $"Goal reached at ({row},{col}) with cost: {cost}";
+                    newItem.Tag = fullPath;  // Store the entire path in the Tag
+                    PathsFoundList.Items.Add(newItem);
+                }
+            });
         }
 
 
 
-    
+
+
+
+
 
         public struct GridLayout
         {

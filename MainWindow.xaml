@@ -2,14 +2,23 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="IntroToAIAssignment1.MainWindow"
-        Title="Robot Navigation" Height="600" Width="800">
+        Title="Robot Navigation" Height="1920" Width="1440">
+
     <Grid Margin="0,0,-375,-276">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="90*"/>
+            <ColumnDefinition Width="618*"/>
+            <ColumnDefinition Width="467*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="PathsFoundList" SelectionChanged="PathsFoundList_SelectionChanged" HorizontalAlignment="Left" Height="348" Margin="10,122,0,0" VerticalAlignment="Top" Width="232" Grid.Column="2" />
         <Grid x:Name="SearchAlgorithmGrid"
-              HorizontalAlignment="Stretch"
-              VerticalAlignment="Stretch"
               Background="White"
-              Margin="10">
-            <ListBox x:Name="PathsFoundList" SelectionChanged="PathsFoundList_SelectionChanged" HorizontalAlignment="Left" Height="348" Margin="913,114,0,0" VerticalAlignment="Top" Width="232" av:ItemsSource="{av:SampleData ItemCount=5}"/>
+              Margin="10,10,57,10" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="144*"/>
+                <ColumnDefinition Width="241*"/>
+            </Grid.ColumnDefinitions>
+
         </Grid>
     </Grid>
 </Window>

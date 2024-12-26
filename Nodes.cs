@@ -20,6 +20,10 @@ namespace IntroToAIAssignment1
             Location = location;
             IsPassable = isPassable;
         }
+        public int Heuristic(Nodes goal)
+        {
+            return Math.Abs(this.Location.Row - goal.Location.Row) + Math.Abs(this.Location.Col - goal.Location.Col);
+        }
 
     }
 

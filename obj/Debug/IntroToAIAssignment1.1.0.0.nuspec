@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>IntroToAIAssignment1</id>
+    <version>1.0.0</version>
+    <authors>IntroToAIAssignment1</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="d8594647676cd04eadba1e1055fa4a31bbc61d59" />
+    <dependencies>
+      <group targetFramework="net6.0-windows7.0" />
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net6.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WPF" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="C:\Users\Thomas\Documents\INTROTOAI\IntroductionToAITask1B\bin\Debug\net6.0-windows\IntroToAIAssignment1.runtimeconfig.json" target="lib\net6.0-windows7.0\IntroToAIAssignment1.runtimeconfig.json" />
+    <file src="C:\Users\Thomas\Documents\INTROTOAI\IntroductionToAITask1B\bin\Debug\net6.0-windows\IntroToAIAssignment1.dll" target="lib\net6.0-windows7.0\IntroToAIAssignment1.dll" />
+  </files>
+</package>

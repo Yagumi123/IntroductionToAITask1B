@@ -8,20 +8,34 @@ using System.IO;
 
 namespace IntroToAIAssignment1
 {
-    internal class BFS
+    internal class UCS
     {
-        string bestPathOutputPath = "best_path.txt";
-        public async Task<List<(List<string> Path, int Cost)>>BreadthFirstSearch(Nodes startNode, Nodes goalNode, string outputPath, SearchVisualizeAction visualizeAction, int delay)
+        string bestPathOutputPath = "best_path_ucs.txt";  // File path for the best path
+
+        public async Task<List<(List<string> Path, int Cost)>>UniformCostSearch(Nodes startNode, Nodes goalNode, string outputPath, SearchVisualizeAction visualizeAction, int delay)
         {
-            Queue<(Nodes Node, List<string> Path, HashSet<Nodes> Visited, int Cost)> queue = new Queue<(Nodes, List<string>, HashSet<Nodes>, int)>();
+            // Priority Queue for UCS: Nodes are prioritized by path cost
+            PriorityQueue<(Nodes Node, List<string> Path, int Cost), int> priorityQueue = new PriorityQueue<(Nodes, List<string>, int), int>();
+
+            // Dictionary to keep track of the minimum cost to reach each node
+            Dictionary<Nodes, int> visited = new Dictionary<Nodes, int>();
+
+            // List to store all valid paths to the goal
             List<(List<string> Path, int Cost)> foundPaths = new List<(List<string>, int)>();
 
-            HashSet<Nodes> initialVisited = new HashSet<Nodes> { startNode };
-            queue.Enqueue((startNode, new List<string>(), initialVisited, 0));
+            // Start the search with the initial node
+            priorityQueue.Enqueue((startNode, new List<string>(), 0), 0);
 
-            while (queue.Any())
+            while (priorityQueue.Count > 0)
             {
-                var (current, path, visited, cost) = queue.Dequeue();
+                var (current, path, cost) = priorityQueue.Dequeue();
+
+                // If this node has been visited with a lower cost before, skip processing
+                if (visited.ContainsKey(current) && visited[current] <= cost)
+                    continue;
+
+                // Mark this node as visited with the current cost
+                visited[current] = cost;
 
                 // Visualization
                 if (path.Any())
@@ -32,11 +46,12 @@ namespace IntroToAIAssignment1
                     await Task.Delay(delay);  // Simulate processing delay
                 }
 
-                // Check if this is the goal node
+
+                // Check if the current node is the goal node
                 if (current == goalNode)
                 {
                     Debug.WriteLine($"Goal reached with path: {string.Join(", ", path)} and cost: {cost}");
-                    foundPaths.Add((new List<string>(path), cost)); // Save this path
+                    foundPaths.Add((new List<string>(path), cost));
                     continue;
                 }
 
@@ -45,21 +60,23 @@ namespace IntroToAIAssignment1
                 {
                     (current.Up, "Up"),
                     (current.Left, "Left"),
-                     (current.Down, "Down"),
+                    (current.Down, "Down"),
                     (current.Right, "Right")
-                   
                 })
                 {
-                    if (neighbor != null && neighbor.IsPassable && !visited.Contains(neighbor))
+                    if (neighbor != null && neighbor.IsPassable)
                     {
                         var newPath = new List<string>(path) { direction };
-                        var newVisited = new HashSet<Nodes>(visited) { neighbor };
-                        queue.Enqueue((neighbor, newPath, newVisited, cost + 1)); // Add neighbor to the queue
+                        int newCost = cost + 1;  // Assuming uniform cost, adjust if different
+                        if (!visited.ContainsKey(neighbor) || visited[neighbor] > newCost)
+                        {
+                            priorityQueue.Enqueue((neighbor, newPath, newCost), newCost);
+                        }
                     }
                 }
             }
 
-            // Save results to file
+            // Save results to files
             SavePathsToFile(foundPaths, outputPath);
             SaveBestPathToFile(foundPaths, bestPathOutputPath);
             return foundPaths;
@@ -68,7 +85,7 @@ namespace IntroToAIAssignment1
         private void SavePathsToFile(List<(List<string> Path, int Cost)> paths, string filePath)
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Search Method: Breadth-First Search (BFS)");
+            builder.AppendLine("Search Method: Uniform Cost Search (UCS)");
             builder.AppendLine("Format: Path - Cost");
 
             foreach (var (Path, Cost) in paths.OrderBy(p => p.Cost))
@@ -79,24 +96,20 @@ namespace IntroToAIAssignment1
             File.WriteAllText(filePath, builder.ToString());
             Debug.WriteLine($"Paths saved to {filePath}");
         }
+
         private void SaveBestPathToFile(List<(List<string> Path, int Cost)> paths, string filePath)
         {
             if (paths.Any())
             {
-                // Order paths by cost and take the first one as the best path
                 var bestPath = paths.OrderBy(p => p.Cost).First();
-
-                // Build the string to write to file
                 StringBuilder builder = new StringBuilder();
                 builder.AppendLine("----------------------------------------------------------------------");
-                builder.AppendLine($"Best BFS Route: {string.Join(", ", bestPath.Path)}");
+                builder.AppendLine($"Best UCS Route: {string.Join(", ", bestPath.Path)}");
                 builder.AppendLine("----------------------------------------------------------------------");
 
-                // Write the best path to the specified file
                 File.WriteAllText(filePath, builder.ToString());
                 Debug.WriteLine($"Best path saved to {filePath}");
             }
         }
-
     }
 }

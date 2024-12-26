@@ -1,0 +1,243 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\dfs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:dfs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\hcs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:hcs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\bfs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:bfs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\astar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:astar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\gbfs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:gbfs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\ucs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:ucs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\nodes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:nodes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|c:\\users\\thomas\\documents\\introtoai\\introductiontoaitask1b\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06881823-93F7-4F37-8E5B-D0D2C082939E}|IntroToAIAssignment1.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\MainWindow.xaml.cs",
+              "RelativeToolTip": "MainWindow.xaml.cs",
+              "ViewState": "AgIAACMBAAAAAAAAAAAAADIBAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T02:13:12.131Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UCS.cs",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\UCS.cs",
+              "RelativeDocumentMoniker": "UCS.cs",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\UCS.cs",
+              "RelativeToolTip": "UCS.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAAwDMAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T04:14:17.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GBFS.cs",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\GBFS.cs",
+              "RelativeDocumentMoniker": "GBFS.cs",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\GBFS.cs",
+              "RelativeToolTip": "GBFS.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACUAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T02:34:55.451Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AStar.cs",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\AStar.cs",
+              "RelativeDocumentMoniker": "AStar.cs",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\AStar.cs",
+              "RelativeToolTip": "AStar.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAswCoAAAB6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T02:13:11.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BFS.cs",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\BFS.cs",
+              "RelativeDocumentMoniker": "BFS.cs",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\BFS.cs",
+              "RelativeToolTip": "BFS.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAuwB4AAAB2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T02:13:12.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Nodes.cs",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\Nodes.cs",
+              "RelativeDocumentMoniker": "Nodes.cs",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\Nodes.cs",
+              "RelativeToolTip": "Nodes.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T02:13:12.142Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HCS.cs",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\HCS.cs",
+              "RelativeDocumentMoniker": "HCS.cs",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\HCS.cs",
+              "RelativeToolTip": "HCS.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAAADQAAAB2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T04:44:15.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DFS.cs",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\DFS.cs",
+              "RelativeDocumentMoniker": "DFS.cs",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\DFS.cs",
+              "RelativeToolTip": "DFS.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAADwv1IAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T02:13:12.122Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AssemblyInfo.cs",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\AssemblyInfo.cs",
+              "RelativeDocumentMoniker": "AssemblyInfo.cs",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\AssemblyInfo.cs",
+              "RelativeToolTip": "AssemblyInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T02:13:12.162Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\App.xaml",
+              "RelativeDocumentMoniker": "App.xaml",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\App.xaml",
+              "RelativeToolTip": "App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-12-26T02:13:12.113Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\App.xaml.cs",
+              "RelativeDocumentMoniker": "App.xaml.cs",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\App.xaml.cs",
+              "RelativeToolTip": "App.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T02:13:12.174Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "fed925fc-9cc4-4fd2-92dd-55cae0b41588",
+        "Display": 0,
+        "X": 70,
+        "Y": 133,
+        "Width": 1131,
+        "Height": 774,
+        "WindowState": 0
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "C:\\Users\\Thomas\\Documents\\INTROTOAI\\IntroductionToAITask1B\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-12-26T02:13:12.186Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

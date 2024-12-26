@@ -8,20 +8,34 @@ using System.IO;
 
 namespace IntroToAIAssignment1
 {
-    internal class BFS
+    internal class GBFS
     {
-        string bestPathOutputPath = "best_path.txt";
-        public async Task<List<(List<string> Path, int Cost)>>BreadthFirstSearch(Nodes startNode, Nodes goalNode, string outputPath, SearchVisualizeAction visualizeAction, int delay)
+        string bestPathOutputPath = "best_path_gbfs.txt";  // File path for the best path
+
+        public async Task<List<(List<string> Path, int Cost)>>GreedyBestFirstSearch(Nodes startNode, Nodes goalNode, string outputPath, SearchVisualizeAction visualizeAction, int delay)
         {
-            Queue<(Nodes Node, List<string> Path, HashSet<Nodes> Visited, int Cost)> queue = new Queue<(Nodes, List<string>, HashSet<Nodes>, int)>();
+            // PriorityQueue for GBFS: (Node, Path, Cost) with priority based on heuristic
+            PriorityQueue<(Nodes Node, List<string> Path, int Cost), int> priorityQueue = new PriorityQueue<(Nodes, List<string>, int), int>();
+
+            // Dictionary to track visited nodes with their minimum heuristic values
+            Dictionary<Nodes, int> visited = new Dictionary<Nodes, int>();
+
+            // List to store all valid paths to the goal
             List<(List<string> Path, int Cost)> foundPaths = new List<(List<string>, int)>();
 
-            HashSet<Nodes> initialVisited = new HashSet<Nodes> { startNode };
-            queue.Enqueue((startNode, new List<string>(), initialVisited, 0));
+            // Start the search with the initial node
+            priorityQueue.Enqueue((startNode, new List<string>(), 0), startNode.Heuristic(goalNode));
 
-            while (queue.Any())
+            while (priorityQueue.Count > 0)
             {
-                var (current, path, visited, cost) = queue.Dequeue();
+                var (current, path, cost) = priorityQueue.Dequeue();
+
+                // Skip this node if a better path (lower heuristic) to it already exists
+                if (visited.ContainsKey(current) && visited[current] <= cost)
+                    continue;
+
+                // Mark this node as visited with the current heuristic
+                visited[current] = cost;
 
                 // Visualization
                 if (path.Any())
@@ -37,29 +51,29 @@ namespace IntroToAIAssignment1
                 {
                     Debug.WriteLine($"Goal reached with path: {string.Join(", ", path)} and cost: {cost}");
                     foundPaths.Add((new List<string>(path), cost)); // Save this path
-                    continue;
+                    continue; // Continue exploring for other potential paths
                 }
 
-                // Explore neighbors
+                // Explore all neighbors
                 foreach (var (neighbor, direction) in new[]
                 {
-                    (current.Up, "Up"),
                     (current.Left, "Left"),
-                     (current.Down, "Down"),
-                    (current.Right, "Right")
-                   
+                    (current.Right, "Right"),
+                    (current.Up, "Up"),
+                    (current.Down, "Down")
                 })
                 {
-                    if (neighbor != null && neighbor.IsPassable && !visited.Contains(neighbor))
+                    // Add neighbors to the queue if they are passable
+                    if (neighbor != null && neighbor.IsPassable && (!visited.ContainsKey(neighbor) || visited[neighbor] > cost + 1))
                     {
                         var newPath = new List<string>(path) { direction };
-                        var newVisited = new HashSet<Nodes>(visited) { neighbor };
-                        queue.Enqueue((neighbor, newPath, newVisited, cost + 1)); // Add neighbor to the queue
+                        int heuristic = neighbor.Heuristic(goalNode);
+                        priorityQueue.Enqueue((neighbor, newPath, cost + 1), heuristic);
                     }
                 }
             }
 
-            // Save results to file
+            // Save all found paths to the output file
             SavePathsToFile(foundPaths, outputPath);
             SaveBestPathToFile(foundPaths, bestPathOutputPath);
             return foundPaths;
@@ -68,7 +82,7 @@ namespace IntroToAIAssignment1
         private void SavePathsToFile(List<(List<string> Path, int Cost)> paths, string filePath)
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Search Method: Breadth-First Search (BFS)");
+            builder.AppendLine("Search Method: Greedy Best-First Search (GBFS)");
             builder.AppendLine("Format: Path - Cost");
 
             foreach (var (Path, Cost) in paths.OrderBy(p => p.Cost))
@@ -79,24 +93,21 @@ namespace IntroToAIAssignment1
             File.WriteAllText(filePath, builder.ToString());
             Debug.WriteLine($"Paths saved to {filePath}");
         }
+
         private void SaveBestPathToFile(List<(List<string> Path, int Cost)> paths, string filePath)
         {
             if (paths.Any())
             {
-                // Order paths by cost and take the first one as the best path
+                // Select the best path based on cost
                 var bestPath = paths.OrderBy(p => p.Cost).First();
-
-                // Build the string to write to file
                 StringBuilder builder = new StringBuilder();
                 builder.AppendLine("----------------------------------------------------------------------");
-                builder.AppendLine($"Best BFS Route: {string.Join(", ", bestPath.Path)}");
+                builder.AppendLine($"Best GBFS Route: {string.Join(", ", bestPath.Path)}");
                 builder.AppendLine("----------------------------------------------------------------------");
 
-                // Write the best path to the specified file
                 File.WriteAllText(filePath, builder.ToString());
                 Debug.WriteLine($"Best path saved to {filePath}");
             }
         }
-
     }
 }
