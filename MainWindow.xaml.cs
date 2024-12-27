@@ -26,8 +26,8 @@ namespace IntroToAIAssignment1
     /// 
     public partial class MainWindow : Window
     {
-        
 
+        private string selectedMethod = "none";
         private Nodes[,] nodes; // To store the Nodes array
         private GridLayout gridLayout; // To store the grid layout
         public MainWindow()
@@ -39,12 +39,23 @@ namespace IntroToAIAssignment1
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             string filename = "C:/Users/Thomas/Documents/INTROTOAI/IntroductionToAITask1B/RobotNavTEST.txt";
-
-            string method = "DFS";
-
-            GridLayout gridLayout = InterpretGrid(filename);
+            gridLayout = InterpretGrid(filename);
             DrawGrid(gridLayout, filename);
-            PerformSearch(method, gridLayout);
+            // Check for command-line arguments
+            string[] args = Environment.GetCommandLineArgs();
+                if (args.Length > 1)
+                {
+                    selectedMethod = args[1].ToLower();
+                    PerformSearch(selectedMethod, gridLayout); // Automatically start the search when CMD is used
+                }
+                else
+                {
+                    MessageBox.Show("No search method specified. Please select one in the UI.", "Info");
+                }
+            
+
+
+            
         }
 
 
@@ -435,6 +446,8 @@ namespace IntroToAIAssignment1
             Nodes startNode = nodes[gridLayout.StartLocationXY[1], gridLayout.StartLocationXY[0]];
             var outputPath = "PathsFOUND.txt";
             var methods = method.ToLower().Split(',');
+            List<string> allPaths = new List<string>();
+
             foreach (var goalLocation in gridLayout.GoalLocations)
             {
                 int goalRow = goalLocation[1];
@@ -447,53 +460,72 @@ namespace IntroToAIAssignment1
                     {
                         case "dfs":
                             DFS dfs = new DFS();
-                            await dfs.DepthFirstSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                           var dfsResults = await dfs.DepthFirstSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
                             {
                                 Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal, path));
                             }, 100);
+                            allPaths.AddRange(dfsResults.Select(p => string.Join(", ", p.Path)));
                             break;
                         case "bfs":
                             BFS bfs = new BFS();
-                            await bfs.BreadthFirstSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                           var bfsResults = await bfs.BreadthFirstSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
                             {
                                 Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal, path));
                             }, 100);
+                            allPaths.AddRange(bfsResults.Select(p => string.Join(", ", p.Path)));
                             break;
                         case "astar":
                             AStar astar = new AStar();
-                            await astar.AStarSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
-                            {
-                                Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal,path));
-                            }, 100);
+                            var astarResults = await astar.AStarSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                             {
+                                 Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal, path));
+                             }, 100);
+                               allPaths.AddRange(astarResults.Select(p => string.Join(", ", p.Path)));
                             break;
                         case "ucs":
                             UCS ucs = new UCS();
-                            await ucs.UniformCostSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                            var ucsResults = await ucs.UniformCostSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
                             {
                                 Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal, path));
                             }, 100);
+                            allPaths.AddRange(ucsResults.Select(p => string.Join(", ", p.Path)));
                             break;
                         case "gbfs":
                             GBFS gbfs = new GBFS();
-                            await gbfs.GreedyBestFirstSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                           var gbfsResults = await gbfs.GreedyBestFirstSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
                             {
                                 Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal, path));
                             }, 100);
+                            allPaths.AddRange(gbfsResults.Select(p => string.Join(", ", p.Path)));
                             break;
                         case "hcs":
                             HCS hcs = new HCS();
-                            await hcs.HillClimbingSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
+                           var hcsResults = await hcs.HillClimbingSearch(startNode, goalNode, outputPath, (row, col, direction, cost, goal, path) =>
                             {
                                 Dispatcher.Invoke(() => UpdateUIWithSearchResults(row, col, direction, cost, goal, path));
                             }, 100);
+                            allPaths.AddRange(hcsResults.Select(p => string.Join(", ", p.Path)));
                             break;
+
                         default:
                             Debug.WriteLine($"Error: Unsupported method '{meth}'. Use 'dfs', 'bfs', 'astar', 'ucs', 'gbfs', or other supported methods.");
                             break;
                     }
                 }
             }
-        }
+            // Update CompletedSearchTypes ListBox
+            string displayName = method.ToUpper().Replace(",", " / ") + $" - {allPaths.Count} paths";
+
+            Debug.WriteLine(allPaths.ToString());
+            ListBoxItem completedItem = new ListBoxItem
+            {
+
+                Content = displayName,
+                Tag = allPaths // Store all paths for later display
+            };
+            CompletedSearchTypes.Items.Add(completedItem);
+        
+    }
 
 
 
@@ -512,8 +544,20 @@ namespace IntroToAIAssignment1
                     newItem.Content = $"Goal reached at ({row},{col}) with cost: {cost}";
                     newItem.Tag = fullPath;  // Store the entire path in the Tag
                     PathsFoundList.Items.Add(newItem);
+                    PathsFoundList.SelectedItem = newItem;
                 }
             });
+        }
+        private void CompletedSearchTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CompletedSearchTypes.SelectedItem is ListBoxItem selectedItem && selectedItem.Tag is List<string> paths)
+            {
+                PathsFoundList.Items.Clear(); // Clear existing items
+                foreach (var path in paths)
+                {
+                    PathsFoundList.Items.Add(new ListBoxItem { Content = path });
+                }
+            }
         }
 
 
@@ -539,6 +583,53 @@ namespace IntroToAIAssignment1
             }
         }
 
+    
+        private void DFSBtn_Click(object sender, RoutedEventArgs e)
+        {
+            selectedMethod = "dfs";
+            MessageBox.Show("DFS Selected", "Info");
+        }
 
+        private void BFSBtn_Click(object sender, RoutedEventArgs e)
+        {
+            selectedMethod = "bfs";
+            MessageBox.Show("BFS Selected", "Info");
+        }
+
+        private void AStarBtn_Click_1(object sender, RoutedEventArgs e)
+        {
+            selectedMethod = "astar";
+            MessageBox.Show("A* Selected", "Info");
+        }
+
+        private void UCSBtn_Click(object sender, RoutedEventArgs e)
+        {
+            selectedMethod = "ucs";
+            MessageBox.Show("UCS Selected", "Info");
+        }
+
+        private void GBFSBtn_Click(object sender, RoutedEventArgs e)
+        {
+            selectedMethod = "gbfs";
+            MessageBox.Show("GBFS Selected", "Info");
+        }
+
+        private void HCSBtn_Click(object sender, RoutedEventArgs e)
+        {
+            selectedMethod = "hcs";
+            MessageBox.Show("HCS Selected", "Info");
+        }
+
+        private void AllBtn_Click(object sender, RoutedEventArgs e)
+        {
+            selectedMethod = "all";
+            MessageBox.Show("ALL Selected", "Info");
+        }
+
+    private void StartBtn_Click(object sender, RoutedEventArgs e)
+        {
+            PathsFoundList.Items.Clear();
+            PerformSearch(selectedMethod, gridLayout);
+        }
     }
 }

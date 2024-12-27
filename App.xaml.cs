@@ -19,8 +19,7 @@ namespace IntroToAIAssignment1
 
             // Get command-line arguments
             string[] args = Environment.GetCommandLineArgs();
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+          
           /*  if (args.Length == 3) // Check for required arguments
             {
                 string filename = args[1];
