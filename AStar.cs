@@ -12,7 +12,7 @@ namespace IntroToAIAssignment1
     {
         string bestPathOutputPath = "best_path_astar.txt";  // Path for saving the best route
 
-        public async Task<List<(List<string> Path, int Cost)>>AStarSearch(Nodes startNode, Nodes goalNode, string outputPath, SearchVisualizeAction visualizeAction, int delay)
+        public async Task<List<(List<string> Path, int Cost)>>AStarSearch(Nodes startNode, Nodes goalNode, Action<int, int, string, int, bool, List<string>> uiCallback, int delay)
         {
             PriorityQueue<(Nodes Node, List<string> Path, int Cost, int Heuristic)> openSet = new PriorityQueue<(Nodes, List<string>, int, int)>();
             Dictionary<Nodes, int> visited = new Dictionary<Nodes, int>();
@@ -40,7 +40,7 @@ namespace IntroToAIAssignment1
                     {
                         // Correctly checking if the current node is the goal when calling the delegate
                         bool isGoalReached = current == goalNode;
-                        visualizeAction(current.Location.Row, current.Location.Col, path.Last(), cost, isGoalReached, path);
+                        uiCallback?.Invoke(current.Location.Row, current.Location.Col, path.LastOrDefault() ?? "", cost, isGoalReached, path);
                         await Task.Delay(delay);  // Simulate processing delay
                     }
 
@@ -74,40 +74,32 @@ namespace IntroToAIAssignment1
             }
 
             // Save all paths and the best path
-            SavePathsToFile(foundPaths, outputPath);
             SaveBestPathToFile(foundPaths, bestPathOutputPath);
             return foundPaths;
         }
 
-        private void SavePathsToFile(List<(List<string> Path, int Cost)> paths, string filePath)
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Search Method: A* Search");
-            builder.AppendLine("Format: Path - Cost");
-
-            foreach (var (Path, Cost) in paths.OrderBy(p => p.Cost))
-            {
-                builder.AppendLine($"{string.Join(", ", Path)} - Cost: {Cost}");
-            }
-
-            File.WriteAllText(filePath, builder.ToString());
-            Debug.WriteLine($"Paths saved to {filePath}");
-        }
 
         private void SaveBestPathToFile(List<(List<string> Path, int Cost)> paths, string filePath)
         {
             if (paths.Any())
             {
-                var bestPath = paths.OrderBy(p => p.Cost).First();
+                // Take the first path found; assuming paths are stored as they are found
+                var firstPath = paths.First();
+
+                // Build the string to write to file
                 StringBuilder builder = new StringBuilder();
                 builder.AppendLine("----------------------------------------------------------------------");
-                builder.AppendLine($"Best A* Route: {string.Join(", ", bestPath.Path)}");
+                builder.AppendLine("Initial A* Path (first found):");
+                builder.AppendLine("----------------------------------------------------------------------");
+                builder.AppendLine($"{string.Join(", ", firstPath.Path)} - Cost: {firstPath.Cost}");
                 builder.AppendLine("----------------------------------------------------------------------");
 
+                // Write the first path to the specified file
                 File.WriteAllText(filePath, builder.ToString());
-                Debug.WriteLine($"Best path saved to {filePath}");
+                Debug.WriteLine($"First path saved to {filePath}");
             }
         }
+
 
         private class PriorityQueue<T>
         {

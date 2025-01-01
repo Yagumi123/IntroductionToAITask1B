@@ -10,8 +10,8 @@ namespace IntroToAIAssignment1
 {
     internal class BFS
     {
-        string bestPathOutputPath = "best_path.txt";
-        public async Task<List<(List<string> Path, int Cost)>>BreadthFirstSearch(Nodes startNode, Nodes goalNode, string outputPath, SearchVisualizeAction visualizeAction, int delay)
+        string bestPathOutputPath = "BFS_best_path.txt";
+        public async Task<List<(List<string> Path, int Cost)>>BreadthFirstSearch(Nodes startNode, Nodes goalNode, Action<int, int, string, int, bool, List<string>> uiCallback, int delay)
         {
             Queue<(Nodes Node, List<string> Path, HashSet<Nodes> Visited, int Cost)> queue = new Queue<(Nodes, List<string>, HashSet<Nodes>, int)>();
             List<(List<string> Path, int Cost)> foundPaths = new List<(List<string>, int)>();
@@ -28,8 +28,10 @@ namespace IntroToAIAssignment1
                 {
                     // Correctly checking if the current node is the goal when calling the delegate
                     bool isGoalReached = current == goalNode;
-                    visualizeAction(current.Location.Row, current.Location.Col, path.Last(), cost, isGoalReached, path);
-                    await Task.Delay(delay);  // Simulate processing delay
+                    uiCallback?.Invoke(current.Location.Row, current.Location.Col, path.LastOrDefault() ?? "", cost, isGoalReached, path);
+
+               
+                    await Task.Delay(100);  // Simulate processing delay
                 }
 
                 // Check if this is the goal node
@@ -60,25 +62,12 @@ namespace IntroToAIAssignment1
             }
 
             // Save results to file
-            SavePathsToFile(foundPaths, outputPath);
+            
             SaveBestPathToFile(foundPaths, bestPathOutputPath);
             return foundPaths;
         }
 
-        private void SavePathsToFile(List<(List<string> Path, int Cost)> paths, string filePath)
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Search Method: Breadth-First Search (BFS)");
-            builder.AppendLine("Format: Path - Cost");
 
-            foreach (var (Path, Cost) in paths.OrderBy(p => p.Cost))
-            {
-                builder.AppendLine($"{string.Join(", ", Path)} - Cost: {Cost}");
-            }
-
-            File.WriteAllText(filePath, builder.ToString());
-            Debug.WriteLine($"Paths saved to {filePath}");
-        }
         private void SaveBestPathToFile(List<(List<string> Path, int Cost)> paths, string filePath)
         {
             if (paths.Any())

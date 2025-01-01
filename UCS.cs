@@ -12,7 +12,7 @@ namespace IntroToAIAssignment1
     {
         string bestPathOutputPath = "best_path_ucs.txt";  // File path for the best path
 
-        public async Task<List<(List<string> Path, int Cost)>>UniformCostSearch(Nodes startNode, Nodes goalNode, string outputPath, SearchVisualizeAction visualizeAction, int delay)
+        public async Task<List<(List<string> Path, int Cost)>>UniformCostSearch(Nodes startNode, Nodes goalNode, Action<int, int, string, int, bool, List<string>> uiCallback, int delay)
         {
             // Priority Queue for UCS: Nodes are prioritized by path cost
             PriorityQueue<(Nodes Node, List<string> Path, int Cost), int> priorityQueue = new PriorityQueue<(Nodes, List<string>, int), int>();
@@ -42,7 +42,7 @@ namespace IntroToAIAssignment1
                 {
                     // Correctly checking if the current node is the goal when calling the delegate
                     bool isGoalReached = current == goalNode;
-                    visualizeAction(current.Location.Row, current.Location.Col, path.Last(), cost, isGoalReached, path);
+                    uiCallback?.Invoke(current.Location.Row, current.Location.Col, path.LastOrDefault() ?? "", cost, isGoalReached, path);
                     await Task.Delay(delay);  // Simulate processing delay
                 }
 
@@ -77,25 +77,11 @@ namespace IntroToAIAssignment1
             }
 
             // Save results to files
-            SavePathsToFile(foundPaths, outputPath);
+         
             SaveBestPathToFile(foundPaths, bestPathOutputPath);
             return foundPaths;
         }
 
-        private void SavePathsToFile(List<(List<string> Path, int Cost)> paths, string filePath)
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Search Method: Uniform Cost Search (UCS)");
-            builder.AppendLine("Format: Path - Cost");
-
-            foreach (var (Path, Cost) in paths.OrderBy(p => p.Cost))
-            {
-                builder.AppendLine($"{string.Join(", ", Path)} - Cost: {Cost}");
-            }
-
-            File.WriteAllText(filePath, builder.ToString());
-            Debug.WriteLine($"Paths saved to {filePath}");
-        }
 
         private void SaveBestPathToFile(List<(List<string> Path, int Cost)> paths, string filePath)
         {

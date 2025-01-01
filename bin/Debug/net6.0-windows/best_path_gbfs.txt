@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-Initial A* Path (first found):
+Initial path (first found, compare to example results):
 ----------------------------------------------------------------------
-Down, Right, Right, Right, Right, Right, Right, Right, Right, Right, Right, Down - Cost: 12
+Down, Right, Right, Right, Down, Right, Right, Right, Right, Right, Up, Right, Right, Down - Cost: 14
 ----------------------------------------------------------------------

@@ -5,12 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
+using static IntroToAIAssignment1.SearchHandler;
 
 namespace IntroToAIAssignment1
 {
     internal class DFS
     {
-        public async Task<List<(List<string> Path, int Cost)>> DepthFirstSearch(Nodes startNode, Nodes goalNode, string outputPath, SearchVisualizeAction visualizeAction, int delay)
+
+        string bestPathOutputPath = "DFS_best_path.txt";
+        public async Task<List<(List<string> Path, int Cost)>> DepthFirstSearch(Nodes startNode, Nodes goalNode, Action<int, int, string, int, bool, List<string>> uiCallback, int delay)
         {
             Stack<(Nodes Node, List<string> Path, int Cost)> stack = new Stack<(Nodes, List<string>, int)>();
             Dictionary<Nodes, int> visited = new Dictionary<Nodes, int>();
@@ -30,8 +33,11 @@ namespace IntroToAIAssignment1
                     {
                         // Correctly checking if the current node is the goal when calling the delegate
                         bool isGoalReached = current == goalNode;
-                        visualizeAction(current.Location.Row, current.Location.Col, path.Last(), cost, isGoalReached, path);
-                        await Task.Delay(delay);  // Simulate processing delay
+                        uiCallback?.Invoke(current.Location.Row, current.Location.Col, path.LastOrDefault() ?? "", cost, isGoalReached, path);
+
+
+                 
+                        await Task.Delay(100);  // Simulate processing delay
                     }
 
 
@@ -41,13 +47,15 @@ namespace IntroToAIAssignment1
                         continue;
                     }
 
-                    // Explore neighbors
+                    // Explore neighbors, the order is reversed in DFS vs BFS due to the use of LIFO structure instead of FIFO
                     foreach (var (neighbor, direction) in new[]
                     {
-                        (current.Left, "Left"),
-                        (current.Right, "Right"),
-                        (current.Up, "Up"),
-                        (current.Down, "Down")
+                       (current.Right, "Right"),
+                       (current.Down, "Down"),
+                       (current.Left, "Left"),
+                       (current.Up, "Up")
+
+
                     })
                     {
                         if (neighbor != null && neighbor.IsPassable && (!visited.ContainsKey(neighbor) || visited[neighbor] > cost + 1))
@@ -59,8 +67,8 @@ namespace IntroToAIAssignment1
                 }
             }
 
-            SavePathsToFile(foundPaths, outputPath);
-
+            SavePathsToFile(foundPaths, bestPathOutputPath);
+      
             return foundPaths;  // Return the list of found paths
         }
 
@@ -69,8 +77,22 @@ namespace IntroToAIAssignment1
             StringBuilder builder = new StringBuilder();
             builder.AppendLine("Search Method: Depth-First Search (DFS)");
             builder.AppendLine("Format: Path - Cost");
+            builder.AppendLine();
 
-            foreach (var (path, cost) in paths.OrderBy(p => p.Cost))
+            if (paths.Any())
+            {
+                var firstPath = paths.FirstOrDefault(); // Get the first path found
+                builder.AppendLine("--------------------------------------------------------");
+                builder.AppendLine("Initial path (first found, compare to example results):");
+                builder.AppendLine("--------------------------------------------------------");
+                builder.AppendLine($"{string.Join(", ", firstPath.Path)} - Cost: {firstPath.Cost}");
+                builder.AppendLine("--------------------------------------------------------");
+                builder.AppendLine();
+            }
+
+            // List all paths found
+            builder.AppendLine("All paths found:");
+            foreach (var (path, cost) in paths)
             {
                 builder.AppendLine($"{string.Join(", ", path)} - Cost: {cost}");
             }
@@ -78,5 +100,7 @@ namespace IntroToAIAssignment1
             File.WriteAllText(filePath, builder.ToString());
             Debug.WriteLine($"Paths saved to {filePath}");
         }
+
+
     }
 }

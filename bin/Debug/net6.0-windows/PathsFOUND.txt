@@ -1,3 +1,11 @@
-Search Method: A* Search
+Search Method: Depth-First Search (DFS)
 Format: Path - Cost
 Down, Right, Right, Right, Right, Right, Right, Right, Right, Right, Right, Down - Cost: 12
+Down, Down, Right, Up, Right, Right, Right, Right, Right, Right, Right, Right, Right, Down - Cost: 14
+Down, Down, Down, Right, Up, Up, Right, Right, Right, Right, Right, Right, Right, Right, Right, Down - Cost: 16
+Down, Down, Down, Right, Up, Up, Right, Right, Down, Right, Up, Right, Right, Right, Right, Right, Right, Down - Cost: 18
+Down, Down, Down, Right, Up, Up, Right, Right, Down, Right, Up, Up, Right, Down, Right, Right, Right, Right, Right, Down - Cost: 20
+Down, Down, Down, Right, Up, Up, Right, Right, Down, Right, Up, Up, Up, Right, Down, Down, Right, Right, Right, Right, Right, Down - Cost: 22
+Down, Down, Down, Right, Up, Up, Right, Right, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Up, Right, Right, Right, Right, Down - Cost: 24
+Down, Down, Down, Right, Up, Up, Right, Right, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Down, Right, Up, Up, Right, Right, Right, Down - Cost: 26
+Down, Down, Down, Right, Up, Up, Right, Right, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Down, Right, Up, Up, Right, Right, Up, Right, Down, Down - Cost: 28

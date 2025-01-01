@@ -1,0 +1,20 @@
+Search Method: Depth-First Search (DFS)
+Format: Path - Cost
+
+--------------------------------------------------------
+Initial path (first found, compare to example results):
+--------------------------------------------------------
+Up, Right, Down, Down, Right, Right, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Up, Right, Up, Right, Down, Down - Cost: 30
+--------------------------------------------------------
+
+All paths found:
+Up, Right, Down, Down, Right, Right, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Up, Right, Up, Right, Down, Down - Cost: 30
+Up, Right, Down, Down, Right, Right, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Up, Right, Right, Down - Cost: 28
+Up, Right, Down, Down, Right, Right, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Up, Up, Up, Right, Down, Down, Right, Right, Right, Down - Cost: 26
+Up, Right, Down, Down, Right, Right, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Up, Up, Right, Down, Right, Right, Right, Down - Cost: 24
+Up, Right, Down, Down, Right, Right, Down, Right, Up, Up, Up, Right, Down, Down, Down, Right, Up, Right, Right, Right, Right, Down - Cost: 22
+Up, Right, Down, Down, Right, Right, Down, Right, Up, Up, Up, Right, Down, Down, Right, Right, Right, Right, Right, Down - Cost: 20
+Up, Right, Down, Down, Right, Right, Down, Right, Up, Up, Right, Down, Right, Right, Right, Right, Right, Down - Cost: 18
+Up, Right, Down, Down, Right, Right, Down, Right, Up, Right, Right, Right, Right, Right, Right, Down - Cost: 16
+Up, Right, Down, Down, Right, Right, Right, Right, Right, Right, Right, Right, Right, Down - Cost: 14
+Down, Right, Right, Right, Right, Right, Right, Right, Right, Right, Right, Down - Cost: 12

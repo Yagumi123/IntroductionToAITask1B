@@ -12,7 +12,7 @@ namespace IntroToAIAssignment1
     {
         string bestPathOutputPath = "best_path_gbfs.txt";  // File path for the best path
 
-        public async Task<List<(List<string> Path, int Cost)>>GreedyBestFirstSearch(Nodes startNode, Nodes goalNode, string outputPath, SearchVisualizeAction visualizeAction, int delay)
+        public async Task<List<(List<string> Path, int Cost)>> GreedyBestFirstSearch(Nodes startNode, Nodes goalNode, Action<int, int, string, int, bool, List<string>> uiCallback, int delay)
         {
             // PriorityQueue for GBFS: (Node, Path, Cost) with priority based on heuristic
             PriorityQueue<(Nodes Node, List<string> Path, int Cost), int> priorityQueue = new PriorityQueue<(Nodes, List<string>, int), int>();
@@ -42,7 +42,7 @@ namespace IntroToAIAssignment1
                 {
                     // Correctly checking if the current node is the goal when calling the delegate
                     bool isGoalReached = current == goalNode;
-                    visualizeAction(current.Location.Row, current.Location.Col, path.Last(), cost, isGoalReached, path);
+                    uiCallback?.Invoke(current.Location.Row, current.Location.Col, path.LastOrDefault() ?? "", cost, isGoalReached, path);
                     await Task.Delay(delay);  // Simulate processing delay
                 }
 
@@ -57,10 +57,10 @@ namespace IntroToAIAssignment1
                 // Explore all neighbors
                 foreach (var (neighbor, direction) in new[]
                 {
-                    (current.Left, "Left"),
-                    (current.Right, "Right"),
-                    (current.Up, "Up"),
-                    (current.Down, "Down")
+                        (current.Up, "Up"),
+                        (current.Left, "Left"),
+                        (current.Down, "Down"),
+                        (current.Right, "Right")
                 })
                 {
                     // Add neighbors to the queue if they are passable
@@ -74,7 +74,6 @@ namespace IntroToAIAssignment1
             }
 
             // Save all found paths to the output file
-            SavePathsToFile(foundPaths, outputPath);
             SaveBestPathToFile(foundPaths, bestPathOutputPath);
             return foundPaths;
         }
@@ -93,21 +92,26 @@ namespace IntroToAIAssignment1
             File.WriteAllText(filePath, builder.ToString());
             Debug.WriteLine($"Paths saved to {filePath}");
         }
-
         private void SaveBestPathToFile(List<(List<string> Path, int Cost)> paths, string filePath)
         {
             if (paths.Any())
             {
-                // Select the best path based on cost
-                var bestPath = paths.OrderBy(p => p.Cost).First();
+                // Take the first path found since BFS explores uniformly, it should be the shortest path in an unweighted graph
+                var firstPath = paths.First(); // Assuming the list stores paths in the order they are found
+
+                // Build the string to write to file
                 StringBuilder builder = new StringBuilder();
                 builder.AppendLine("----------------------------------------------------------------------");
-                builder.AppendLine($"Best GBFS Route: {string.Join(", ", bestPath.Path)}");
+                builder.AppendLine("Initial path (first found, compare to example results):");
+                builder.AppendLine("----------------------------------------------------------------------");
+                builder.AppendLine($"{string.Join(", ", firstPath.Path)} - Cost: {firstPath.Cost}");
                 builder.AppendLine("----------------------------------------------------------------------");
 
+                // Write the first path to the specified file
                 File.WriteAllText(filePath, builder.ToString());
-                Debug.WriteLine($"Best path saved to {filePath}");
+                Debug.WriteLine($"First path saved to {filePath}");
             }
         }
+
     }
 }
