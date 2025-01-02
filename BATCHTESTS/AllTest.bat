@@ -5,7 +5,7 @@ echo Running batch tests for all algorithms...
 set EXE_PATH=IntroToAIAssignment1.exe
 
 :: Path to the test file
-set TEST_FILE=TESTFOLDER\RobotNavTEST.txt
+set TEST_FILE=NAVFILES\RobotNavTEST.txt
 
 :: Algorithms to test
 set METHODS=dfs bfs astar ucs gbfs hcs

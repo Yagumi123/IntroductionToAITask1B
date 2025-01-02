@@ -43,7 +43,7 @@ namespace IntroToAIAssignment1
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            string filename = "RobotNavTEST.txt";
+            string filename = "NAVFILES/RobotNavTEST.txt";
             var GridInterpretation = new GridInterpretation();
             gridLayout = GridInterpretation.InterpretGrid(filename);
             DrawGrid(gridLayout, filename);
