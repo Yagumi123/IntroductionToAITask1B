@@ -48,32 +48,40 @@ namespace IntroToAIAssignment1
             }
         }
 
-       
+
         private async Task ExecuteSearch(string filename, string method)
         {
             try
             {
-                Console.WriteLine("Entering search mode...");
+                Console.WriteLine("Starting Batch Search...");
                 // Load the grid layout from the file
                 GridLayout layout = LoadGridLayoutFromFile(filename);
-                //creates a node tree
+
+                // Create the node tree
                 nodes = Nodes.CreateNodeTree(layout);
                 Nodes startNode = nodes[layout.StartLocationXY[1], layout.StartLocationXY[0]];
 
-                // Perform the search using the SearchHandler for a single method
-                SearchHandler searchHandler = new SearchHandler();
-                var result = await searchHandler.PerformSingleSearch(method, startNode, nodes, layout);
+                // Track the number of nodes explored
+                int nodesExplored = 0;
 
-                // Output the results to the console
+                // Perform the search using the SearchHandler
+                SearchHandler searchHandler = new SearchHandler();
+                var result = await searchHandler.PerformSingleSearch(method, startNode, nodes, layout,
+                    (row, col, direction, cost, isGoal, fullPath) => {
+                        nodesExplored++; // Increment node count whenever a node is processed
+                    });
+
+                // Output results in required format
+                Console.WriteLine($"{filename} {method.ToUpper()} {nodesExplored}");
+
                 if (result.HasValue)
                 {
                     var (path, cost) = result.Value;
-                    Console.WriteLine($"{method.ToUpper()} Solution:");
-                    Console.WriteLine(path != null ? string.Join("; ", path) + ";" : "No path found.");
+                    Console.WriteLine(path.Any() ? string.Join("; ", path) + ";" : "No solution found.");
                 }
                 else
                 {
-                    Console.WriteLine($"No solution found for method: {method.ToUpper()}");
+                    Console.WriteLine("No solution found.");
                 }
             }
             catch (Exception ex)
@@ -87,7 +95,7 @@ namespace IntroToAIAssignment1
         {
             try
             {
-               
+
                 var GridInterpretation = new GridInterpretation();
                 return GridInterpretation.InterpretGrid(filename);
             }

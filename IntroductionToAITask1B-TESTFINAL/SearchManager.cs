@@ -153,46 +153,52 @@ namespace IntroToAIAssignment1
                 0   // Memory usage is not monitored in this mode
             );
         }
-
-        public async Task<(List<string> Path, int Cost)?> PerformSingleSearch(string method, Nodes startNode, Nodes[,] nodes, GridLayout layout)
+        public async Task<(List<string> Path, int Cost)?> PerformSingleSearch(
+            string method,
+            Nodes startNode,
+            Nodes[,] nodes,
+            GridLayout layout,
+            Action<int, int, string, int, bool, List<string>> uiCallback = null)
         {
-            // performs the basic batch search algorithms that only find the one result set.
+
             switch (method)
             {
                 case "dfs":
                     var dfs = new DFS();
-                    var dfsResults = await dfs.DepthFirstSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], null,  0, true);
+                    var dfsResults = await dfs.DepthFirstSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], uiCallback, 0, true);
                     return dfsResults.FirstOrDefault();
 
                 case "bfs":
                     var bfs = new BFS();
-                    var bfsResults = await bfs.BreadthFirstSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], null, 0, true);
+                    var bfsResults = await bfs.BreadthFirstSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], uiCallback, 0, true);
                     return bfsResults.FirstOrDefault();
 
                 case "astar":
-                case "as":
                     var astar = new AStar();
-                    var astarResults = await astar.AStarSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], null, 0, true);
+                    var astarResults = await astar.AStarSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], uiCallback, 0, true);
                     return astarResults.FirstOrDefault();
+
+                case "ucs":
+                    var ucs = new UCS();
+                    var ucsResults = await ucs.UniformCostSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], uiCallback, 0, true);
+                    return ucsResults.FirstOrDefault();
 
                 case "gbfs":
                     var gbfs = new GBFS();
-                    var gbfsResults = await gbfs.GreedyBestFirstSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], null, 0, true);
+                    var gbfsResults = await gbfs.GreedyBestFirstSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], uiCallback, 0, true);
                     return gbfsResults.FirstOrDefault();
+
                 case "hcs":
-                    var hcs = new GBFS();
-                    var hcsResults = await hcs.GreedyBestFirstSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], null, 0, true);
+                    var hcs = new HCS();
+                    var hcsResults = await hcs.HillClimbingSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], uiCallback, 0, true);
                     return hcsResults.FirstOrDefault();
-                case "ucs":
-                    var ucs = new GBFS();
-                    var ucsResults = await ucs.GreedyBestFirstSearch(startNode, nodes[layout.GoalLocations[0][1], layout.GoalLocations[0][0]], null, 0, true);
-                    return ucsResults.FirstOrDefault();
 
                 default:
                     Console.WriteLine($"Search method '{method}' not recognized.");
                     return null;
             }
         }
+
 
     }
 
