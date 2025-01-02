@@ -1,0 +1,5 @@
+----------------------------------------------------------------------
+Initial path (first found, compare to example results):
+----------------------------------------------------------------------
+Down, Right, Right, Right, Down, Right, Right, Right, Right, Right, Up, Right, Right, Down - Cost: 14
+----------------------------------------------------------------------

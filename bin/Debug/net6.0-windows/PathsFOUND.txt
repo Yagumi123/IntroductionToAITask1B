@@ -1,3 +1,0 @@
-Search Method: A* Search
-Format: Path - Cost
-Down, Right, Right, Right, Right, Right, Right, Right, Right, Right, Right, Down - Cost: 12
